@@ -27,73 +27,73 @@ class NumWordES(NumWordEU):
         '''
         max_val = 3 + 6 * len(high)
 
-        for word, i in zip(high, range(max_val, 3, -6)):
-            self.cards[10 ** (i - 3)] = word + u"illón"
+        for word, i in zip(high, list(range(max_val, 3, -6))):
+            self.cards[10 ** (i - 3)] = word + "illón"
 
     def _setup(self):
         '''
         Setup
         '''
-        lows = [u"cuatr", u"tr", u"b", u"m"]
+        lows = ["cuatr", "tr", "b", "m"]
         self.high_numwords = self._gen_high_numwords([], [], lows)
-        self.negword = u"menos "
-        self.pointword = u"punto"
-        self.gender_stem = u"o"
-        self.exclude_title = [u"y", u"menos", u"punto"]
+        self.negword = "menos "
+        self.pointword = "punto"
+        self.gender_stem = "o"
+        self.exclude_title = ["y", "menos", "punto"]
         self.mid_numwords = [
-            (1000, u"mil"),
-            (100, u"cien"),
-            (90, u"noventa"),
-            (80, u"ochenta"),
-            (70, u"setenta"),
-            (60, u"sesenta"),
-            (50, u"cincuenta"),
-            (40, u"cuarenta"),
-            (30, u"treinta"),
+            (1000, "mil"),
+            (100, "cien"),
+            (90, "noventa"),
+            (80, "ochenta"),
+            (70, "setenta"),
+            (60, "sesenta"),
+            (50, "cincuenta"),
+            (40, "cuarenta"),
+            (30, "treinta"),
             ]
         self.low_numwords = [
-            u"vientinueve",
-            u"vientiocho",
-            u"vientisiete",
-            u"vientiséis",
-            u"vienticinco",
-            u"vienticuatro",
-            u"vientitrés",
-            u"vientidós",
-            u"vientiuno",
-            u"viente",
-            u"diecinueve",
-            u"dieciocho",
-            u"diecisiete",
-            u"dieciseis",
-            u"quince",
-            u"catorce",
-            u"trece",
-            u"doce",
-            u"once",
-            u"diez",
-            u"nueve",
-            u"ocho",
-            u"siete",
-            u"seis",
-            u"cinco",
-            u"cuatro",
-            u"tres",
-            u"dos",
-            u"uno",
-            u"cero",
+            "vientinueve",
+            "vientiocho",
+            "vientisiete",
+            "vientiséis",
+            "vienticinco",
+            "vienticuatro",
+            "vientitrés",
+            "vientidós",
+            "vientiuno",
+            "viente",
+            "diecinueve",
+            "dieciocho",
+            "diecisiete",
+            "dieciseis",
+            "quince",
+            "catorce",
+            "trece",
+            "doce",
+            "once",
+            "diez",
+            "nueve",
+            "ocho",
+            "siete",
+            "seis",
+            "cinco",
+            "cuatro",
+            "tres",
+            "dos",
+            "uno",
+            "cero",
             ]
         self.ords = {
-            1: u"primer",
-            2: u"segund",
-            3: u"tercer",
-            4: u"cuart",
-            5: u"quint",
-            6: u"sext",
-            7: u"séptim",
-            8: u"octav",
-            9: u"noven",
-            10: u"décim",
+            1: "primer",
+            2: "segund",
+            3: "tercer",
+            4: "cuart",
+            5: "quint",
+            6: "sext",
+            7: "séptim",
+            8: "octav",
+            9: "noven",
+            10: "décim",
             }
 
     def _merge(self, curr, next):
@@ -105,28 +105,28 @@ class NumWordES(NumWordEU):
         if cnum == 1:
             if nnum < 1000000:
                 return next
-            ctext = u"un"
+            ctext = "un"
         elif cnum == 100:
-            ctext += u"t" + self.gender_stem
+            ctext += "t" + self.gender_stem
 
         if nnum < cnum:
             if cnum < 100:
-                return (u"%s y %s" % (ctext, ntext), cnum + nnum)
-            return (u"%s %s" % (ctext, ntext), cnum + nnum)
+                return ("%s y %s" % (ctext, ntext), cnum + nnum)
+            return ("%s %s" % (ctext, ntext), cnum + nnum)
         elif (not nnum % 1000000) and cnum > 1:
-            ntext = ntext[:-3] + u"ones"
+            ntext = ntext[:-3] + "ones"
 
         if nnum == 100:
             if cnum == 5:
-                ctext = u"quinien"
-                ntext = u""
+                ctext = "quinien"
+                ntext = ""
             elif cnum == 7:
-                ctext = u"sete"
+                ctext = "sete"
             elif cnum == 9:
-                ctext = u"nove"
-            ntext += u"t" + self.gender_stem + u"s"
+                ctext = "nove"
+            ntext += "t" + self.gender_stem + "s"
         else:
-            ntext = u" " + ntext
+            ntext = " " + ntext
 
         return (ctext + ntext, cnum * nnum)
 
@@ -146,16 +146,16 @@ class NumWordES(NumWordEU):
         '''
         self._verify_ordinal(value)
         # Correct for fem?
-        return u"%s°" % value
+        return "%s°" % value
 
     def currency(self, val, longval=True, old=False):
         '''
         Convert to currency
         '''
         if old:
-            return self._split(val, hightxt=u"peso/s", lowtxt=u"peseta/s",
-                divisor=1000, jointxt=u"y", longval=longval)
-        return super(NumWordES, self).currency(val, jointxt=u"y",
+            return self._split(val, hightxt="peso/s", lowtxt="peseta/s",
+                divisor=1000, jointxt="y", longval=longval)
+        return super(NumWordES, self).currency(val, jointxt="y",
             longval=longval)
 
 _NW = NumWordES()

@@ -18,12 +18,12 @@ class NumWordBase(object):
         self.is_title = False
         self.precision = 2
         self.exclude_title = []
-        self.negword = u"(-) "
-        self.pointword = u"(.)"
-        self.errmsg_nonnum = u"type(%s) not in [long, int, float]"
-        self.errmsg_floatord = u"Cannot treat float %s as ordinal."
-        self.errmsg_negord = u"Cannot treat negative num %s as ordinal."
-        self.errmsg_toobig = u"abs(%s) must be less than %s."
+        self.negword = "(-) "
+        self.pointword = "(.)"
+        self.errmsg_nonnum = "type(%s) not in [long, int, float]"
+        self.errmsg_floatord = "Cannot treat float %s as ordinal."
+        self.errmsg_negord = "Cannot treat negative num %s as ordinal."
+        self.errmsg_toobig = "abs(%s) must be less than %s."
 
         self.high_numwords = None
         self.mid_numwords = None
@@ -34,7 +34,7 @@ class NumWordBase(object):
         self._setup()
         self._set_numwords()
 
-        self.maxval = 1000 * self.cards.iterkeys().next()
+        self.maxval = 1000 * next(iter(self.cards.keys()))
 
     def _base_setup(self):
         '''
@@ -73,7 +73,7 @@ class NumWordBase(object):
         '''
         Set low num words
         '''
-        for word, i in zip(low, range(len(low) - 1, -1, -1)):
+        for word, i in zip(low, list(range(len(low) - 1, -1, -1))):
             self.cards[i] = word
 
     @staticmethod
@@ -160,7 +160,7 @@ class NumWordBase(object):
         '''
         Verify ordinal
         '''
-        if not value == long(value):
+        if not value == int(value):
             raise TypeError(self.errmsg_floatord % (value))
         if not abs(value) == value:
             raise TypeError(self.errmsg_negord % (value))
@@ -203,7 +203,7 @@ class NumWordBase(object):
         Convert long to cardinal
         '''
         try:
-            assert long(value) == value
+            assert int(value) == value
         except (ValueError, TypeError, AssertionError):
             return self._cardinal_float(value)
 

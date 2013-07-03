@@ -9,17 +9,17 @@ class TestNumWordFR(TestCase):
 
     def test_cardinal(self):
         from numword.numword_fr import cardinal
-        self.assertEqual(cardinal(0), u"zéro")
-        self.assertEqual(cardinal(11.96), u"onze virgule quatre-vingt-seize")
-        self.assertEqual(cardinal(100), u"cent")
-        self.assertEqual(cardinal(100.0), u"cent")
-        self.assertEqual(cardinal(121.01), u"cent-vingt-et-un virgule un")
+        self.assertEqual(cardinal(0), "zéro")
+        self.assertEqual(cardinal(11.96), "onze virgule quatre-vingt-seize")
+        self.assertEqual(cardinal(100), "cent")
+        self.assertEqual(cardinal(100.0), "cent")
+        self.assertEqual(cardinal(121.01), "cent-vingt-et-un virgule un")
         self.assertEqual(cardinal(3121.45),
-            u"trois-mille-cent-vingt-et-un virgule quarante-cinq")
+            "trois-mille-cent-vingt-et-un virgule quarante-cinq")
 
     def test_cardinal_not_a_number(self):
         from numword.numword_fr import cardinal
-        error = u"type\(Ximinez\) not in \[long, int, float\]"
+        error = "type\(Ximinez\) not in \[long, int, float\]"
         with self.assertRaisesRegexp(TypeError, error):
             cardinal('Ximinez')
 
@@ -28,7 +28,7 @@ class TestNumWordFR(TestCase):
         from numword.numword_fr import NumWordFR
         max_val = NumWordFR().maxval
         number = max_val + 1
-        error = u"abs\(%s\) must be less than %s" % (number, max_val)
+        error = "abs\(%s\) must be less than %s" % (number, max_val)
         with self.assertRaisesRegexp(OverflowError, error):
             cardinal(number)
 
@@ -37,27 +37,27 @@ class TestNumWordFR_BE(TestCase):
 
     def test_cardinal(self):
         from numword.numword_fr_be import cardinal
-        self.assertEqual(cardinal(72), u"septante-deux")
-        self.assertEqual(cardinal(94), u"nonante-quatre")
+        self.assertEqual(cardinal(72), "septante-deux")
+        self.assertEqual(cardinal(94), "nonante-quatre")
         self.assertEqual(cardinal(93.79),
-            u"nonante-trois virgule septante-neuf")
+            "nonante-trois virgule septante-neuf")
 
 
 class TestNumWordEN(TestCase):
 
     def test_cardinal(self):
         from numword.numword_en import cardinal
-        self.assertEqual(cardinal(11.96), u"eleven point ninety-six")
+        self.assertEqual(cardinal(11.96), "eleven point ninety-six")
         self.assertEqual(cardinal(100), "one hundred")
         self.assertEqual(cardinal(100.0), "one hundred")
         self.assertEqual(cardinal(121.01),
             "one hundred and twenty-one point one")
         self.assertEqual(cardinal(3121.45),
-            u"three thousand, one hundred and twenty-one point forty-five")
+            "three thousand, one hundred and twenty-one point forty-five")
 
     def test_cardinal_not_a_number(self):
         from numword.numword_en import cardinal
-        error = u"type\(Ximinez\) not in \[long, int, float\]"
+        error = "type\(Ximinez\) not in \[long, int, float\]"
         with self.assertRaisesRegexp(TypeError, error):
             cardinal('Ximinez')
 
@@ -66,7 +66,7 @@ class TestNumWordEN(TestCase):
         from numword.numword_en import NumWordEN
         max_val = NumWordEN().maxval
         number = max_val + 1
-        error = u"abs\(%s\) must be less than %s" % (number, max_val)
+        error = "abs\(%s\) must be less than %s" % (number, max_val)
         with self.assertRaisesRegexp(OverflowError, error):
             cardinal(number)
 
@@ -76,77 +76,77 @@ class TestNumWordDE(TestCase):
     def test_cardinal(self):
         from numword.numword_de import cardinal
         tests = [
-            [-1.0000100, u"minus eins Komma null"],
-            [1.11, u"eins Komma eins eins"],
-            [1, u"eins"],
-            [11, u"elf"],
-            [12, u"zwölf"],
-            [21, u"einundzwanzig"],
-            [29, u"neunundzwanzig"],
-            [30, u"dreißig"],
-            [31, u"einunddreißig"],
-            [33, u"dreiunddreißig"],
-            [71, u"einundsiebzig"],
-            [80, u"achtzig"],
-            [81, u"einundachtzig"],
-            [91, u"einundneunzig"],
-            [99, u"neunundneunzig"],
-            [100, u"einhundert"],
-            [101, u"einhunderteins"],
-            [102, u"einhundertzwei"],
-            [151, u"einhunderteinundfünfzig"],
-            [155, u"einhundertfünfundfünfzig"],
-            [161, u"einhunderteinundsechzig"],
-            [180, u"einhundertachtzig"],
-            [300, u"dreihundert"],
-            [301, u"dreihunderteins"],
-            [308, u"dreihundertacht"],
-            [832, u"achthundertzweiunddreißig"],
-            [1000, u"eintausend"],
-            [1001, u"eintausendeins"],
-            [1061, u"eintausendeinundsechzig"],
-            [1100, u"eintausendeinhundert"],
-            [1111, u"eintausendeinhundertelf"],
-            [1500, u"eintausendfünfhundert"],
-            [1701, u"eintausendsiebenhunderteins"],
-            [3000, u"dreitausend"],
-            [8280, u"achttausendzweihundertachtzig"],
-            [8291, u"achttausendzweihunderteinundneunzig"],
-            [10100, u"zehntausendeinhundert"],
-            [10101, u"zehntausendeinhunderteins"],
-            [10099, u"zehntausendneunundneunzig"],
-            [12000, u"zwölftausend"],
-            [150000, u"einhundertfünfzigtausend"],
-            [500000, u"fünfhunderttausend"],
-            [1000000, u"eine Million"],
-            [1000100, u"eine Million einhundert"],
-            [1000199, u"eine Million einhundertneunundneunzig"],
-            [2000000, u"zwei Millionen"],
-            [2000001, u"zwei Millionen eins"],
-            [1000000000, u"eine Milliarde"],
-            [2147483647, u"zwei Milliarden einhundertsiebenundvierzig"
-                u" Millionen vierhundertdreiundachtzigtausend"
-                u"sechshundertsiebenundvierzig"],
-                [23000000000, u"dreiundzwanzig Milliarden"],
-                [126000000000001, u"einhundertsechsundzwanzig Billionen eins"],
-                [-121211221211111, u"minus einhunderteinundzwanzig Billionen "
-                    u"zweihundertelf Milliarden zweihunderteinundzwanzig "
-                    u"Millionen zweihundertelftausendeinhundertelf"],
-                [1000000000000000, u"eine Billiarde"],
-                [256000000000000000, u"zweihundertsechsundfünfzig Billiarden"],
+            [-1.0000100, "minus eins Komma null"],
+            [1.11, "eins Komma eins eins"],
+            [1, "eins"],
+            [11, "elf"],
+            [12, "zwölf"],
+            [21, "einundzwanzig"],
+            [29, "neunundzwanzig"],
+            [30, "dreißig"],
+            [31, "einunddreißig"],
+            [33, "dreiunddreißig"],
+            [71, "einundsiebzig"],
+            [80, "achtzig"],
+            [81, "einundachtzig"],
+            [91, "einundneunzig"],
+            [99, "neunundneunzig"],
+            [100, "einhundert"],
+            [101, "einhunderteins"],
+            [102, "einhundertzwei"],
+            [151, "einhunderteinundfünfzig"],
+            [155, "einhundertfünfundfünfzig"],
+            [161, "einhunderteinundsechzig"],
+            [180, "einhundertachtzig"],
+            [300, "dreihundert"],
+            [301, "dreihunderteins"],
+            [308, "dreihundertacht"],
+            [832, "achthundertzweiunddreißig"],
+            [1000, "eintausend"],
+            [1001, "eintausendeins"],
+            [1061, "eintausendeinundsechzig"],
+            [1100, "eintausendeinhundert"],
+            [1111, "eintausendeinhundertelf"],
+            [1500, "eintausendfünfhundert"],
+            [1701, "eintausendsiebenhunderteins"],
+            [3000, "dreitausend"],
+            [8280, "achttausendzweihundertachtzig"],
+            [8291, "achttausendzweihunderteinundneunzig"],
+            [10100, "zehntausendeinhundert"],
+            [10101, "zehntausendeinhunderteins"],
+            [10099, "zehntausendneunundneunzig"],
+            [12000, "zwölftausend"],
+            [150000, "einhundertfünfzigtausend"],
+            [500000, "fünfhunderttausend"],
+            [1000000, "eine Million"],
+            [1000100, "eine Million einhundert"],
+            [1000199, "eine Million einhundertneunundneunzig"],
+            [2000000, "zwei Millionen"],
+            [2000001, "zwei Millionen eins"],
+            [1000000000, "eine Milliarde"],
+            [2147483647, "zwei Milliarden einhundertsiebenundvierzig"
+                " Millionen vierhundertdreiundachtzigtausend"
+                "sechshundertsiebenundvierzig"],
+                [23000000000, "dreiundzwanzig Milliarden"],
+                [126000000000001, "einhundertsechsundzwanzig Billionen eins"],
+                [-121211221211111, "minus einhunderteinundzwanzig Billionen "
+                    "zweihundertelf Milliarden zweihunderteinundzwanzig "
+                    "Millionen zweihundertelftausendeinhundertelf"],
+                [1000000000000000, "eine Billiarde"],
+                [256000000000000000, "zweihundertsechsundfünfzig Billiarden"],
                 # I know the next is wrong! but what to do?
-                [-2.12, u"minus zwei Komma eins zwei"],
+                [-2.12, "minus zwei Komma eins zwei"],
                 [7401196841564901869874093974498574336000000000,
-                    u"sieben Septilliarden vierhunderteins Septillionen "
-                    u"einhundertsechsundneunzig Sextilliarden "
-                    u"achthunderteinundvierzig Sextillionen fünfhundertvi"
-                    u"erundsechzig Quintilliarden neunhunderteins "
-                    u"Quintillionen achthundertneunundsechzig Quadrilliarden "
-                    u"achthundertvierundsiebzig Quadrillionen dreiundneunzig "
-                    u"Trilliarden neunhundertvierundsiebzig Trillionen "
-                    u"vierhundertachtundneunzig Billiarden fünfhundertvieru"
-                    u"ndsiebzig Billionen dreihundertsechsunddreißig "
-                    u"Milliarden"],
+                    "sieben Septilliarden vierhunderteins Septillionen "
+                    "einhundertsechsundneunzig Sextilliarden "
+                    "achthunderteinundvierzig Sextillionen fünfhundertvi"
+                    "erundsechzig Quintilliarden neunhunderteins "
+                    "Quintillionen achthundertneunundsechzig Quadrilliarden "
+                    "achthundertvierundsiebzig Quadrillionen dreiundneunzig "
+                    "Trilliarden neunhundertvierundsiebzig Trillionen "
+                    "vierhundertachtundneunzig Billiarden fünfhundertvieru"
+                    "ndsiebzig Billionen dreihundertsechsunddreißig "
+                    "Milliarden"],
                 ]
         for number, word in tests:
             self.assertEqual(cardinal(number), word)
@@ -155,17 +155,17 @@ class TestNumWordDE(TestCase):
         from numword.numword_de import year
         tests = [
             # Watch out, negative years are broken!
-            [0, u"null"],
-            [33, u"dreiunddreißig"],
-            [150, u"einhundertfünfzig"],
-            [160, u"einhundertsechzig"],
-            [1130, u"elfhundertdreißig"],
-            [1999, u"neunzehnhundertneunundneunzig"],
-            [1984, u"neunzehnhundertvierundachtzig"],
-            [2000, u"zweitausend"],
-            [2001, u"zweitausendeins"],
-            [2010, u"zweitausendzehn"],
-            [2012, u"zweitausendzwölf"],
+            [0, "null"],
+            [33, "dreiunddreißig"],
+            [150, "einhundertfünfzig"],
+            [160, "einhundertsechzig"],
+            [1130, "elfhundertdreißig"],
+            [1999, "neunzehnhundertneunundneunzig"],
+            [1984, "neunzehnhundertvierundachtzig"],
+            [2000, "zweitausend"],
+            [2001, "zweitausendeins"],
+            [2010, "zweitausendzehn"],
+            [2012, "zweitausendzwölf"],
             ]
         for number, word in tests:
             self.assertEqual(year(number), word)
@@ -173,13 +173,13 @@ class TestNumWordDE(TestCase):
     def test_currency(self):
         from numword.numword_de import currency
         tests = [
-            [12222, u"einhundertzweiundzwanzig Euro und zweiundzwanzig Cent"],
-            [123322, u"eintausendzweihundertdreiunddreißig Euro und "
-                u"zweiundzwanzig Cent"],
+            [12222, "einhundertzweiundzwanzig Euro und zweiundzwanzig Cent"],
+            [123322, "eintausendzweihundertdreiunddreißig Euro und "
+                "zweiundzwanzig Cent"],
             [686412,
-                u"sechstausendachthundertvierundsechzig Euro und zwölf Cent"],
-            [84, u"vierundachtzig Cent"],
-            [1, u"ein Cent"],
+                "sechstausendachthundertvierundsechzig Euro und zwölf Cent"],
+            [84, "vierundachtzig Cent"],
+            [1, "ein Cent"],
             ]
         for number, word in tests:
             self.assertEqual(currency(number), word)
@@ -187,40 +187,40 @@ class TestNumWordDE(TestCase):
     def test_ordinal(self):
         from numword.numword_de import ordinal
         tests = [
-            [1, u"erste"],
-            [3, u"dritte"],
-            [11, u"elfte"],
-            [12, u"zwölfte"],
-            [21, u"einundzwanzigste"],
-            [29, u"neunundzwanzigste"],
-            [30, u"dreißigste"],
-            [31, u"einunddreißigste"],
-            [33, u"dreiunddreißigste"],
-            [71, u"einundsiebzigste"],
-            [80, u"achtzigste"],
-            [81, u"einundachtzigste"],
-            [91, u"einundneunzigste"],
-            [99, u"neunundneunzigste"],
-            [100, u"einhundertste"],
-            [101, u"einhunderterste"],
-            [102, u"einhundertzweite"],
-            [151, u"einhunderteinundfünfzigste"],
-            [155, u"einhundertfünfundfünfzigste"],
-            [161, u"einhunderteinundsechzigste"],
-            [180, u"einhundertachtzigste"],
-            [300, u"dreihundertste"],
-            [301, u"dreihunderterste"],
-            [308, u"dreihundertachte"],
-            [832, u"achthundertzweiunddreißigste"],
-            [1000, u"eintausendste"],
-            [1001, u"eintausenderste"],
-            [1061, u"eintausendeinundsechzigste"],
-            [2000001, u"zwei Millionen erste"],
+            [1, "erste"],
+            [3, "dritte"],
+            [11, "elfte"],
+            [12, "zwölfte"],
+            [21, "einundzwanzigste"],
+            [29, "neunundzwanzigste"],
+            [30, "dreißigste"],
+            [31, "einunddreißigste"],
+            [33, "dreiunddreißigste"],
+            [71, "einundsiebzigste"],
+            [80, "achtzigste"],
+            [81, "einundachtzigste"],
+            [91, "einundneunzigste"],
+            [99, "neunundneunzigste"],
+            [100, "einhundertste"],
+            [101, "einhunderterste"],
+            [102, "einhundertzweite"],
+            [151, "einhunderteinundfünfzigste"],
+            [155, "einhundertfünfundfünfzigste"],
+            [161, "einhunderteinundsechzigste"],
+            [180, "einhundertachtzigste"],
+            [300, "dreihundertste"],
+            [301, "dreihunderterste"],
+            [308, "dreihundertachte"],
+            [832, "achthundertzweiunddreißigste"],
+            [1000, "eintausendste"],
+            [1001, "eintausenderste"],
+            [1061, "eintausendeinundsechzigste"],
+            [2000001, "zwei Millionen erste"],
             # The following is broken
             #[1000000000, "eine Milliardeste"],
-            [2147483647, u"zwei Milliarden einhundertsiebenundvierzig"
-                u" Millionen vierhundertdreiundachtzigtausend"
-                u"sechshundertsiebenundvierzigste"],
+            [2147483647, "zwei Milliarden einhundertsiebenundvierzig"
+                " Millionen vierhundertdreiundachtzigtausend"
+                "sechshundertsiebenundvierzigste"],
 
             ]
         for number, word in tests:
